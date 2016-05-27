@@ -6,7 +6,7 @@ api.get('/api/jokes', function (req, res, next) {
     return res.json(jokes.allJokes);
 });
 
-api.get('/api/joke/random', function (req, res, next) {
+api.get('/api/joke/random', function (req, res, next) { //Route-middleware.
     return res.json(jokes.getRandomJoke());
 });
 
@@ -27,7 +27,7 @@ api.put('/api/editJoke/', function (req, res) {
 api.delete('/api/delete/', function (req, res) {
     var jokeToDelete = req.body.jokeToDelete;
     jokes.deleteJoke(jokeToDelete);
-    res.json("joke deleted");
+    res.json(jokes.allJokes);
 });
 
 //Der skal exportes, før man kan require denne side i app.js :-)

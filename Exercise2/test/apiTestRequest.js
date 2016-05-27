@@ -12,7 +12,7 @@ request('http://localhost:3000/api/jokes', function (error, response, body) {
 
 //--POST--
 
-//Start serveren, og kør denne fil (alt ovenstående skal udkommenteres, da dette skal køres med mocha).
+//Start serveren, og kør denne fil
 
 var options = {
     url: "http://localhost:3000/api/joke",

@@ -23,9 +23,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public'))); //build-in middleware (only one left)
+app.use(express.static(path.join(__dirname, 'public'))); //build-in middleware
 
-app.use(session({
+app.use(session({ //Her laves en session
     secret: 'secret_3162735',
     saveUninitialized: true,
     resave: true,
@@ -38,7 +38,7 @@ app.use('/', api); //Her bestemmes at alt der har med api at gøre, kan lade sig
 app.use('/', users);
 //Det er vigtigt med rækkefølgen af dette, da det afgør hvad brugeren bliver "udsat" for
 
-//SESSIONS! OG costum-middleware
+//SESSION med username! OG costum-middleware
 app.use(function (req, res, next) {
     var session = req.session; //session-"attributten" tilføjes til request-objektet.
     console.log("in session middleware");

@@ -1,5 +1,5 @@
 var request = require("request");
-var expect = require("chai").expect; //Mocha
+var expect = require("chai").expect; //Mocha = framework, chai er et bibliotek til mocha, som gør vi kan bruge eksempslvis expect.
 var http = require("http");
 var nock = require('nock'); //Bruges til at mocke
 
@@ -29,7 +29,9 @@ after(function (done) {
 });
 
 
-//Her restes på det "rigtige" api - ingen mocking.
+//Her testes på det "rigtige" api - ingen mocking.
+
+//GET
 describe("Testing actual API ", function () {
 
     var options = {
@@ -49,8 +51,74 @@ describe("Testing actual API ", function () {
     });
 });
 
+//POST
+describe("Testing actual API ", function () {
 
-//Mock via nock, for at få en random joke.
+    var options = {
+        url: "http://localhost:" + TEST_PORT + "/api/joke",
+        method: "POST",
+        json: true,
+        body: {joke: "This is a new joke!"}
+    };
+
+    it("Should add a new joke", function (done) {
+
+        request(options, function (error, res, body) {
+
+            var joke = body;
+
+            expect(joke).to.be.equal("This is a new joke!");
+            done();
+        });
+    });
+});
+
+//PUT
+describe("Testing actual API ", function () {
+
+    var options = {
+        url: "http://localhost:" + TEST_PORT + "/api/editJoke",
+        method: "PUT",
+        json: true,
+        body: {newJoke: "I am changed!", oldJoke: "I intend to live forever, or die trying"}
+    };
+
+    it("Should edit a joke", function (done) {
+
+        request(options, function (error, res, body) {
+
+            var jokes = body;
+
+            expect(jokes).to.contains("I am changed!");
+            done();
+        });
+    });
+});
+
+//DELETE
+describe("Testing actual API ", function () {
+
+    var options = {
+        url: "http://localhost:" + TEST_PORT + "/api/delete",
+        method: "DELETE",
+        json: true,
+        body: {jokeToDelete: "A day without sunshine is like, night."}
+    };
+
+    it("Should delete a joke", function (done) {
+
+        request(options, function (error, res, body) {
+
+            var jokes = body;
+
+            expect(jokes).to.not.contains("A day without sunshine is like, night.");
+            done();
+        });
+    });
+});
+
+
+//Mock via nock, for at få en random joke. !!HTTP-mocking!!
 describe("Testing API  with Mocks", function () {
 
     // We mock the api call so that we can controll the return value.
